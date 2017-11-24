@@ -15,7 +15,9 @@
 <main>
   <section class="map map--faded">
     <div class="map__pins">
-      <div class="map__pinsoverlay"><h2>И снова Токио!</h2></div>
+      <div class="map__pinsoverlay">
+        <h2>И снова Токио!</h2>
+      </div>
 
       <button class="map__pin map__pin--main">
         <img src="img/main-pin-image.png" width="40" height="44" draggable="false">
@@ -25,7 +27,9 @@
           </defs>
 
           <ellipse cx="35" cy="35" rx="35" ry="35" fill="rgba(255, 86, 53, 0.7)" />
-          <text><textPath xlink:href="#tophalf" startOffset="0">Поставь меня куда-нибудь</textPath></text>
+          <text>
+            <textPath xlink:href="#tophalf" startOffset="0">Поставь меня куда-нибудь</textPath>
+          </text>
         </svg>
       </button>
     </div>
@@ -174,7 +178,7 @@
         <input type="checkbox" name="features" value="washer" id="feature-washer">
         <label class="feature feature--washer" for="feature-washer">Стиральная машина</label>
 
-        <input type="checkbox" name="features" value="elevator" id="feature-washer">
+        <input type="checkbox" name="features" value="elevator" id="feature-elevator">
         <label class="feature feature--elevator" for="feature-washer">Лифт</label>
 
         <input type="checkbox" name="features" value="conditioner" id="feature-conditioner">
@@ -245,5 +249,6 @@
   <button style="left: 200px; top: 400px;" class="map__pin"><img src="img/avatars/user07.png" width="40" height="40" draggable="false"></button>
 </template>
 
+<script src="js/map.js"></script>
 </body>
 </html>
