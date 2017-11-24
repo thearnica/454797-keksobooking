@@ -104,25 +104,50 @@ renderMapPins();
 var renderOffers = function () {
   var renderOffer = function (advert) {
     var offer = offerTemplate.cloneNode(true);
+    var offerTitle = offer.querySelector('h3');
+    var offerAddress = offer.querySelector('small');
+    var offerPrice = offer.querySelector('.popup__price');
+    var offerType = offer.querySelector('h4');
+    var featuresList = offer.querySelector('.popup__features');
+    var featuresItems = offer.querySelectorAll('.feature');
 
-    offer.querySelector('h3').textContent = advert.offer.title;
-    offer.querySelector('small').textContent = advert.location.address;
-    offer.querySelector('.popup__price').textContent = advert.offer.price + ' \u20BD/ночь';
+    offerTitle.textContent = advert.offer.title;
+    offerAddress.textContent = advert.location.address;
+    offerPrice.textContent = advert.offer.price + ' \u20BD/ночь';
 
     if (advert.offer.type === 'flat') {
-      offer.querySelector('h4').textContent = 'Квартира';
+      offerType.textContent = 'Квартира';
     } else if (advert.offer.type === 'bungalo') {
-      offer.querySelector('h4').textContent = 'Бунгало';
+      offerType.textContent = 'Бунгало';
     } else {
-      offer.querySelector('h4').textContent = 'Дом';
+      offerType.textContent = 'Дом';
     }
 
     offer.querySelector('p').textContent = advert.offer.rooms + ' комнаты для ' + advert.offer.rooms + ' guests';
     offer.querySelector('p:nth-last-child(2)').textContent = 'Заезд после ' + advert.offer.checkin + ' выезд ' + advert.offer.checkout;
 
-    if (advert.offer.features.length) {
+    var compareFeaturesItems = function (items) {
       for (var i = 0; i < advert.offer.features.length; i++) {
-        offer.querySelector('.feature--' + advert.offer.features[i]).textContent = advert.offer.features[i];
+        if (items.classList.contains('feature--' + advert.offer.features[i])) {
+          return items;
+        }
+      }
+      return null;
+    };
+
+    var createNewFeaturesItems = function (item) {
+      var newFeaturesItems = [];
+      for (var i = 0; i < item.length; i++) {
+        newFeaturesItems.push(compareFeaturesItems(item[i]));
+      }
+      return newFeaturesItems;
+    };
+
+    var filteredFeatures = createNewFeaturesItems(featuresItems);
+
+    for (var i = 0; i < featuresItems.length; i++) {
+      if (filteredFeatures.indexOf(featuresItems[i]) < 0) {
+        featuresList.removeChild(featuresItems[i]);
       }
     }
 
@@ -140,4 +165,5 @@ var renderOffers = function () {
 
   cartOfAdverts.appendChild(fragmentOffers);
 };
+
 renderOffers();
