@@ -123,7 +123,7 @@ var renderOffers = function () {
       offerType.textContent = 'Дом';
     }
 
-    offer.querySelector('p').textContent = advert.offer.rooms + ' комнаты для ' + advert.offer.rooms + ' guests';
+    offer.querySelector('p').textContent = advert.offer.rooms + ' комнаты для ' + advert.offer.guests + ' гостей';
     offer.querySelector('p:nth-last-child(2)').textContent = 'Заезд после ' + advert.offer.checkin + ' выезд ' + advert.offer.checkout;
 
     var compareFeaturesItems = function (items) {
