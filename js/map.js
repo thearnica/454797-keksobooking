@@ -44,7 +44,7 @@ var createTemplate = function (x) {
 
     'offer': {
       'title': title,
-      'address': location.x + ',' + location.y,
+      'address': location.x.toFixed(2) + ', ' + location.y.toFixed(2),
       'price': floorRandom(1000, 10000000),
       'type': type,
       'rooms': floorRandom(1, 5),
@@ -105,14 +105,14 @@ var renderOffers = function () {
   var renderOffer = function (advert) {
     var offer = offerTemplate.cloneNode(true);
     var offerTitle = offer.querySelector('h3');
-    var offerAddress = offer.querySelector('small');
+    var offerAddress = offer.querySelector('p small');
     var offerPrice = offer.querySelector('.popup__price');
     var offerType = offer.querySelector('h4');
     var featuresList = offer.querySelector('.popup__features');
     var featuresItems = offer.querySelectorAll('.feature');
 
     offerTitle.textContent = advert.offer.title;
-    offerAddress.textContent = advert.location.address;
+    offerAddress.textContent = advert.offer.address;
     offerPrice.textContent = advert.offer.price + ' \u20BD/ночь';
 
     if (advert.offer.type === 'flat') {
@@ -123,8 +123,25 @@ var renderOffers = function () {
       offerType.textContent = 'Дом';
     }
 
-    offer.querySelector('p').textContent = advert.offer.rooms + ' комнаты для ' + advert.offer.guests + ' гостей';
-    offer.querySelector('p:nth-last-child(2)').textContent = 'Заезд после ' + advert.offer.checkin + ' выезд ' + advert.offer.checkout;
+    var createTitleRoom = function (item) {
+      if (item <= 1) {
+        return item + ' комната ';
+      }
+      else if (item > 1 && item < 5) {
+        return item + ' комнаты ';
+      }
+      return item + ' комнат ';
+    };
+
+    var createTitleGuest = function (item) {
+      if (item === 1) {
+        return item + ' гостя';
+      }
+      return item + ' гостей';
+    };
+
+    offer.querySelector('p:nth-of-type(3)').textContent = createTitleRoom(advert.offer.rooms) + 'для ' + createTitleGuest(advert.offer.guests);
+    offer.querySelector('p:nth-of-type(4)').textContent = 'Заезд после ' + advert.offer.checkin + ' выезд ' + advert.offer.checkout;
 
     var compareFeaturesItems = function (items) {
       for (var i = 0; i < advert.offer.features.length; i++) {
@@ -151,7 +168,7 @@ var renderOffers = function () {
       }
     }
 
-    offer.querySelector('p').textContent = advert.offer.description;
+    offer.querySelector('p:nth-of-type(5)').textContent = advert.offer.description;
     offer.querySelector('img').src = advert.author.avatar;
 
     return offer;
