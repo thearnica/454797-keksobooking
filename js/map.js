@@ -43,8 +43,8 @@ var createTemplate = function (seq) {
 
   var title = randomPickFrom(OFFERS_TITLE);
   var location = {
-    'x': 300 + Math.random() * (900 - 300),
-    'y': 100 + Math.random() * (500 - 100)
+    x: 300 + Math.random() * (900 - 300),
+    y: 100 + Math.random() * (500 - 100)
   };
   var type = randomPickFrom(OFFER_TYPES);
   var checkin = randomPickFrom(OFFER_CHECKINS);
@@ -52,25 +52,25 @@ var createTemplate = function (seq) {
   var features = randomPickAndTimesFrom(OFFER_FEATURES);
 
   return {
-    'author': {
-      'avatar': 'img/avatars/user0' + seq + '.png'
+    author: {
+      avatar: 'img/avatars/user0' + seq + '.png'
     },
 
-    'offer': {
-      'title': title,
-      'address': location.x.toFixed(2) + ', ' + location.y.toFixed(2),
-      'price': floorRandom(1000, 1000000),
-      'type': type,
-      'rooms': floorRandom(1, 5),
-      'guests': floorRandom(0, 20),
-      'checkin': checkin,
-      'checkout': checkout,
-      'features': features,
-      'description': '',
-      'photos': []
+    offer: {
+      title: title,
+      address: location.x.toFixed(2) + ', ' + location.y.toFixed(2),
+      price: floorRandom(1000, 1000000),
+      type: type,
+      rooms: floorRandom(1, 5),
+      guests: floorRandom(0, 20),
+      checkin: checkin,
+      checkout: checkout,
+      features: features,
+      description: '',
+      photos: []
     },
 
-    'location': location
+    location: location
   };
 };
 
