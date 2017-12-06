@@ -1,4 +1,6 @@
 'use strict';
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 
 var OFFERS_TITLE = [
   'Большая уютная квартира',
@@ -105,15 +107,17 @@ var renderMapPins = function () {
   };
 
   var fragmentPins = document.createDocumentFragment();
+  var mapPins = [];
 
   adverts.forEach(function (advert) {
-    fragmentPins.appendChild(renderMapPin(advert));
+    var pin = renderMapPin(advert);
+    mapPins.push(pin);
+    fragmentPins.appendChild(pin);
   });
 
   pinsOfMap.appendChild(fragmentPins);
+  return mapPins;
 };
-
-renderMapPins();
 
 var renderOffers = function () {
   var renderOffer = function (advert) {
@@ -186,12 +190,125 @@ var renderOffers = function () {
   };
 
   var fragmentOffers = document.createDocumentFragment();
+  var popups = [];
 
   adverts.forEach(function (advert) {
-    fragmentOffers.appendChild(renderOffer(advert));
+    var popup = renderOffer(advert);
+    popups.push(popup);
+    fragmentOffers.appendChild(popup);
   });
 
   cartOfAdverts.appendChild(fragmentOffers);
+  return popups;
 };
 
-renderOffers();
+var popups = renderOffers();
+var mapPins = renderMapPins();
+var mainMapPin = document.querySelector('.map__pin--main');
+var form = document.querySelector('.notice__form');
+var inputs = form.querySelectorAll('input');
+
+
+var disabledInputs = function () {
+  inputs.forEach(function (input) {
+    input.getAttribute('disabled');
+  });
+};
+
+var includedInputs = function () {
+  inputs.forEach(function (input) {
+    input.removeAttribute('disabled');
+  });
+};
+
+var hideMapPins = function () {
+  mapPins.forEach(function (mapPin) {
+    mapPin.style.display = 'none';
+  });
+};
+
+hideMapPins();
+
+var visibleMapPins = function () {
+  mapPins.forEach(function (mapPin) {
+    mapPin.style.display = '';
+  });
+};
+
+var hidePopups = function () {
+  popups.forEach(function (popup) {
+    popup.style.display = 'none';
+  });
+};
+
+hidePopups();
+
+var removeActiveMapPin = function () {
+  mapPins.forEach(function (mapPin) {
+    mapPin.classList.remove('map__pin--active');
+  });
+};
+var closePopup = function () {
+  removeActiveMapPin();
+  hidePopups();
+  document.removeEventListener('keydown', closePopupOnEscPress);
+};
+
+var closePopupOnEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
+
+var closePopupOnClick = function (mapPin, popup) {
+  var buttonClosePopup = popup.querySelector('.popup__close');
+  buttonClosePopup.addEventListener('click', function () {
+    closePopup();
+  });
+};
+
+var openPopup = function (mapPin, index) {
+  mapPin.classList.add('map__pin--active');
+  popups[index].style.display = '';
+};
+
+var setupOpenPopup = function (mapPin, index) {
+  closePopup();
+  openPopup(mapPin, index);
+  document.addEventListener('keydown', closePopupOnEscPress);
+};
+
+var loading = function () {
+  cartOfAdverts.classList.add('map--faded');
+  form.classList.add('notice__form--disabled');
+  disabledInputs();
+};
+
+var setupMapPin = function (mapPin, index) {
+  closePopupOnClick(mapPin, popups[index]);
+
+  mapPin.addEventListener('click', function () {
+    setupOpenPopup(mapPin, index);
+  });
+
+  mapPin.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      setupOpenPopup(mapPin, index);
+    }
+  });
+};
+
+loading();
+
+mainMapPin.addEventListener('mouseup', function () {
+  cartOfAdverts.classList.remove('map--faded');
+  removeActiveMapPin();
+  visibleMapPins();
+  form.classList.remove('notice__form--disabled');
+  includedInputs();
+});
+
+mapPins.forEach(function (mapPin, index) {
+  setupMapPin(mapPin, index);
+});
+
