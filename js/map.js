@@ -260,12 +260,24 @@ var closePopupOnEscPress = function (evt) {
   }
 };
 
-var closePopupOnClick = function (mapPin, popup) {
-  var buttonClosePopup = popup.querySelector('.popup__close');
-  buttonClosePopup.addEventListener('click', function () {
+var findButtonClosePopup = function (popup) {
+  return popup.querySelector('.popup__close');
+};
+
+var closePopupOnClick = function (popup) {
+  findButtonClosePopup(popup).addEventListener('click', function () {
     closePopup();
   });
 };
+
+var closePopupOnEnterPress = function (popup) {
+  findButtonClosePopup(popup).addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      closePopup();
+    }
+  });
+};
+
 
 var openPopup = function (mapPin, index) {
   mapPin.classList.add('map__pin--active');
@@ -285,7 +297,8 @@ var loading = function () {
 };
 
 var setupMapPin = function (mapPin, index) {
-  closePopupOnClick(mapPin, popups[index]);
+  closePopupOnClick(popups[index]);
+  closePopupOnEnterPress(popups[index]);
 
   mapPin.addEventListener('click', function () {
     setupOpenPopup(mapPin, index);
