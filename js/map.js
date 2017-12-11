@@ -187,8 +187,6 @@ var renderOffer = function (offer, advert) {
   return offer;
 };
 
-
-// var popups = renderOffers();
 var mapPins = renderMapPins();
 var activePopup = null;
 var mainMapPin = document.querySelector('.map__pin--main');
@@ -313,43 +311,62 @@ mapPins.forEach(function (mapPin, index) {
   setupMapPin(mapPin, index);
 });
 
-(function bindRoomSelector() {
-  var roomToGuests = {
-    1: [1],
-    2: [2, 1],
-    3: [3, 2, 1],
-    100: [0]
-  };
-  var roomSelector = document.querySelector('#room_number');
-  var capacitySelector = document.querySelector('#capacity');
-  roomSelector.addEventListener('change', function () {
-    var allowedGuests = roomToGuests[roomSelector.value];
-    var capacity = capacitySelector.value;
-    if (allowedGuests.indexOf(capacity) < 0) {
-      capacitySelector.value = allowedGuests[0];
-    }
-  });
-})();
 
-(function bindRoomSelector() {
-  var typeToMinimalCost = {
-    'flat': 0,
-    'bungalo': 1000,
-    'house': 5000,
-    'palace': 10000
-  };
-  var typeSelector = document.querySelector('#type');
-  var costSelector = document.querySelector('#price');
-  typeSelector.addEventListener('change', function () {
-    var minCost = typeToMinimalCost[typeSelector.value];
-    costSelector.setAttribute('min', minCost);
-  });
-})();
+var roomToGuests = {
+  1: [1],
+  2: [2, 1],
+  3: [3, 2, 1],
+  100: [0]
+};
+var roomSelector = document.querySelector('#room_number');
+var capacitySelector = document.querySelector('#capacity');
+roomSelector.addEventListener('change', function () {
+  var allowedGuests = roomToGuests[roomSelector.value];
+  var capacity = capacitySelector.value;
+  if (allowedGuests.indexOf(capacity) < 0) {
+    capacitySelector.value = allowedGuests[0];
+  }
+});
 
-(function bindRoomSelector() {
-  var timeInSelector = document.querySelector('#timein');
-  var timeOutSelector = document.querySelector('#timeout');
-  timeInSelector.addEventListener('change', function () {
-    timeOutSelector.value = timeInSelector.value;
+
+var typeToMinimalCost = {
+  'flat': 0,
+  'bungalo': 1000,
+  'house': 5000,
+  'palace': 10000
+};
+var typeSelector = document.querySelector('#type');
+var costSelector = document.querySelector('#price');
+typeSelector.addEventListener('change', function () {
+  var minCost = typeToMinimalCost[typeSelector.value];
+  costSelector.setAttribute('min', minCost);
+});
+
+
+var timeInSelector = document.querySelector('#timein');
+var timeOutSelector = document.querySelector('#timeout');
+timeInSelector.addEventListener('change', function () {
+  timeOutSelector.value = timeInSelector.value;
+});
+
+var inp = form.querySelectorAll('input');
+
+function showAllErrorMessages() {
+  inp.forEach(function (input) {
+    input.style.border = '';
   });
-})();
+  var invalidFields = form.querySelectorAll('input:invalid');
+  invalidFields.forEach(function (input) {
+    input.style.border = '5px solid red';
+  });
+}
+
+var submitButton = form.querySelector('.form__submit');
+
+submitButton.addEventListener('click', showAllErrorMessages);
+
+submitButton.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    showAllErrorMessages();
+  }
+});
