@@ -22,6 +22,27 @@ var OFFER_CHECKINS = ['12:00', '13:00', '14:00'];
 var OFFER_CHECKOUTS = ['12:00', '13:00', '14:00'];
 var OFFER_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
+var ROOM_TO_GUESTS = {
+  1: [1],
+  2: [2, 1],
+  3: [3, 2, 1],
+  100: [0]
+};
+
+var GUESTS_CAPACITY_NAMES = {
+  1: 'для 1 гостя',
+  2: 'для 2 гостей',
+  3: 'для 3 гостей',
+  0: 'не для гостей'
+};
+
+var TYPE_TO_MINIMAL_COST = {
+  'bungalo': 0,
+  'flat': 1000,
+  'house': 5000,
+  'palace': 10000
+};
+
 var floorRandom = function (min, max) {
   return min + Math.floor(Math.random() * (max - min));
 };
@@ -311,43 +332,53 @@ mapPins.forEach(function (mapPin, index) {
   setupMapPin(mapPin, index);
 });
 
-
-var roomToGuests = {
-  1: [1],
-  2: [2, 1],
-  3: [3, 2, 1],
-  100: [0]
-};
-var roomSelector = document.querySelector('#room_number');
-var capacitySelector = document.querySelector('#capacity');
-roomSelector.addEventListener('change', function () {
-  var allowedGuests = roomToGuests[roomSelector.value];
+var checkRoomCapacity = function () {
+  var roomSelector = document.querySelector('#room_number');
+  var capacitySelector = document.querySelector('#capacity');
+  var allowedGuests = ROOM_TO_GUESTS[roomSelector.value];
+  capacitySelector.innerHTML = '';
+  Object.keys(GUESTS_CAPACITY_NAMES).forEach(function (key) {
+    if (allowedGuests.indexOf(+key) >= 0) {
+      var option = document.createElement('option');
+      option.value = key;
+      option.text = GUESTS_CAPACITY_NAMES[key];
+      capacitySelector.appendChild(option);
+    }
+  });
   var capacity = capacitySelector.value;
-  if (allowedGuests.indexOf(capacity) < 0) {
+  if (allowedGuests.indexOf(+capacity) < 0) {
     capacitySelector.value = allowedGuests[0];
   }
-});
-
-
-var typeToMinimalCost = {
-  'flat': 0,
-  'bungalo': 1000,
-  'house': 5000,
-  'palace': 10000
+  roomSelector.addEventListener('change', checkRoomCapacity);
 };
-var typeSelector = document.querySelector('#type');
-var costSelector = document.querySelector('#price');
-typeSelector.addEventListener('change', function () {
-  var minCost = typeToMinimalCost[typeSelector.value];
-  costSelector.setAttribute('min', minCost);
-});
+
+checkRoomCapacity();
+
+var checkCost = function () {
+  var typeSelector = document.querySelector('#type');
+  var costSelector = document.querySelector('#price');
+  typeSelector.addEventListener('change', function () {
+    var minCost = TYPE_TO_MINIMAL_COST[typeSelector.value];
+    costSelector.setAttribute('min', minCost);
+    costSelector.value = minCost;
+  });
+};
+
+checkCost();
 
 
-var timeInSelector = document.querySelector('#timein');
-var timeOutSelector = document.querySelector('#timeout');
-timeInSelector.addEventListener('change', function () {
-  timeOutSelector.value = timeInSelector.value;
-});
+var checkTime = function () {
+  var timeInSelector = document.querySelector('#timein');
+  var timeOutSelector = document.querySelector('#timeout');
+  timeInSelector.addEventListener('change', function () {
+    timeOutSelector.value = timeInSelector.value;
+  });
+  timeOutSelector.addEventListener('change', function () {
+    timeInSelector.value = timeOutSelector.value;
+  });
+};
+
+checkTime();
 
 var inp = form.querySelectorAll('input');
 
@@ -355,18 +386,28 @@ function showAllErrorMessages() {
   inp.forEach(function (input) {
     input.style.border = '';
   });
-  var invalidFields = form.querySelectorAll('input:invalid');
+  var allFields = [].concat.apply([], form.querySelectorAll('input'));
+  var invalidFields = allFields.filter(function (input) {
+    return !input.validity.valid || (input.required && !input.value);
+  });
   invalidFields.forEach(function (input) {
     input.style.border = '5px solid red';
   });
+  return invalidFields.length;
 }
 
 var submitButton = form.querySelector('.form__submit');
 
-submitButton.addEventListener('click', showAllErrorMessages);
+submitButton.addEventListener('click', function (evt) {
+  if (showAllErrorMessages()) {
+    evt.preventDefault();
+  }
+});
 
 submitButton.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
-    showAllErrorMessages();
+    if (showAllErrorMessages()) {
+      evt.preventDefault();
+    }
   }
 });
