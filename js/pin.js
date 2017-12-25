@@ -47,10 +47,11 @@
     });
   };
 
-  window.removeActiveMapPin = function (mapPins) {
-    mapPins.forEach(function (mapPin) {
-      mapPin.classList.remove('map__pin--active');
-    });
+  window.removeActiveMapPin = function () {
+    var activePin = document.querySelector('.map__pin--active');
+    if (activePin) {
+      activePin.classList.remove('map__pin--active');
+    }
   };
 
   var setupMapPin = function (mapPin, index, callback) {
