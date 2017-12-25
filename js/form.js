@@ -81,6 +81,13 @@
     }
   });
 
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), function () {
+      form.reset();
+    }, window.showError);
+  });
+
   window.disabledInputs = function () {
     inputs.forEach(function (input) {
       input.getAttribute('disabled');

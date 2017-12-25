@@ -847,3 +847,23 @@ textarea:focus
 {
     background-position: -10px -10px;
 }
+
+.modal {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  z-index: 1;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 200px;
+  min-height: 100px;
+  margin-top: -50px;
+  margin-left: -100px;
+  background-color: #ffffff;
+}
+
+.modal--visible {
+  display: flex;
+}
