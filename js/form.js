@@ -109,6 +109,10 @@
     });
   };
 
+  window.updateAddress = function (x, y) {
+    form.querySelector('[name="address"]').value = 'x: ' + x + ', y: ' + y;
+  };
+
   checkRoomCapacity();
   checkCost();
   checkTime();

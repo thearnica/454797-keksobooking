@@ -9,6 +9,10 @@
     }
   }
 
+  function clamp(min, max, value) {
+    return Math.min(max, Math.max(min, value));
+  }
+
   var cartOfAdverts = document.querySelector('.map');
   var template = document.querySelector('template');
   var offerTemplate = template.content.querySelector('.map__card');
@@ -70,13 +74,57 @@
     document.addEventListener('keydown', closePopupOnEscPress);
   };
 
-  mainMapPin.addEventListener('mouseup', function () {
+  // main map pin
+  function mainMapPinDragger() {
+    var mouseIsHoldedAt = null;
+    mainMapPin.addEventListener('mousedown', function (evt) {
+      mouseIsHoldedAt = {
+        x: evt.clientX,
+        y: evt.clientY
+      };
+    });
+
+    document.addEventListener('mouseup', function () {
+      mouseIsHoldedAt = null;
+    });
+
+    document.addEventListener('mousemove', function (evt) {
+      if (mouseIsHoldedAt) {
+        var delta = {
+          x: -mouseIsHoldedAt.x + evt.clientX,
+          y: -mouseIsHoldedAt.y + evt.clientY
+        };
+        mouseIsHoldedAt = {
+          x: evt.clientX,
+          y: evt.clientY
+        };
+        var left = (mainMapPin.offsetLeft + delta.x);
+        var top = clamp(100, 500, mainMapPin.offsetTop + delta.y);
+
+        mainMapPin.style.left = left + 'px';
+        mainMapPin.style.top = top + 'px';
+
+        var box = mainMapPin.getBoundingClientRect();
+        window.updateAddress(
+            left + box.width / 2,
+            top + box.height
+        );
+        evt.preventDefault();
+      }
+    }, true);
+  }
+
+  function initMainMapPin() {
     cartOfAdverts.classList.remove('map--faded');
     window.removeActiveMapPin(mapPins);
     window.visibleMapPins(mapPins);
     form.classList.remove('notice__form--disabled');
     window.includedInputs();
-  });
+    mainMapPinDragger();
+    mainMapPin.removeEventListener('mouseup', initMainMapPin);
+  }
+
+  mainMapPin.addEventListener('mouseup', initMainMapPin);
 
   cartOfAdverts.classList.remove('map--faded');
 
