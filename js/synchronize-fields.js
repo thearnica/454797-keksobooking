@@ -12,4 +12,4 @@ window.synchronizeFields = function (fieldA, fieldB, valuesA, valuesB, mergeFn) 
 
   fieldA.addEventListener('change', onFieldChange(fieldA, fieldB, valuesA, valuesB));
   fieldB.addEventListener('change', onFieldChange(fieldB, fieldA, valuesB, valuesA));
-}
+};
