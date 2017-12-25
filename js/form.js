@@ -42,6 +42,7 @@
   };
   var syncValueWithMin = function (element, value) {
     element.min = value;
+    element.value = value;
   };
 
   window.synchronizeFields(document.querySelector('#timein'), document.querySelector('#timeout'), ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
