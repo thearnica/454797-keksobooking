@@ -9,11 +9,11 @@
 
   var activePopup = null;
 
-  function removeNode(popup) {
+  var removeNode = function (popup) {
     if (popup.parentNode) {
       popup.parentNode.removeChild(popup);
     }
-  }
+  };
 
   var closePopup = function () {
     window.removeActiveMapPin();

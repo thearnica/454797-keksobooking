@@ -36,6 +36,14 @@
     roomSelector.addEventListener('change', checkRoomCapacity);
   };
 
+  var autoSynchronizeFields = function (from, to, valuesA, valuesB, callback) {
+    from.addEventListener('change', function () {
+      window.synchronizeFields(from, to, valuesA, valuesB, callback);
+    });
+    to.addEventListener('change', function () {
+      window.synchronizeFields(from, to, valuesB, valuesA, callback);
+    });
+  };
 
   var syncValues = function (element, value) {
     element.value = value;
@@ -45,10 +53,15 @@
     element.value = value;
   };
 
-  window.synchronizeFields(document.querySelector('#timein'), document.querySelector('#timeout'), ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
-  window.synchronizeFields(document.querySelector('#type'), document.querySelector('#price'), ['bungalo', 'flat', 'house', 'palace'], [0, 1000, 5000, 10000], syncValueWithMin);
-
   var form = document.querySelector('.notice__form');
+  var timeIn = form.querySelector('#timein');
+  var timeOut = form.querySelector('#timeout');
+  autoSynchronizeFields(timeIn, timeOut, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
+
+  var type = form.querySelector('#type');
+  var price = form.querySelector('#price');
+  autoSynchronizeFields(type, price, ['bungalo', 'flat', 'house', 'palace'], [0, 1000, 5000, 10000], syncValueWithMin);
+
   var inputs = form.querySelectorAll('input');
 
   function showAllErrorMessages() {
@@ -79,6 +92,13 @@
         evt.preventDefault();
       }
     }
+  });
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), function () {
+      form.reset();
+    }, window.showError);
   });
 
   window.disabledInputs = function () {
