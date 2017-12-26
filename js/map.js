@@ -72,7 +72,15 @@
     });
   }
 
-  mainMapPin.addEventListener('mouseup', initMainMapPin);
+  var startupScripts = [];
+
+  mainMapPin.addEventListener('mouseup', function () {
+    if (window.adverts) {
+      initMainMapPin();
+    } else {
+      startupScripts.push(initMainMapPin);
+    }
+  });
 
   cartOfAdverts.classList.remove('map--faded');
 
@@ -83,5 +91,9 @@
     mapPins = window.renderMapPins();
     window.hideMapPins(mapPins);
     window.setupMapPins(mapPins, window.showCard);
+
+    startupScripts.forEach(function (cb) {
+      cb();
+    });
   }, window.showError);
 })();
