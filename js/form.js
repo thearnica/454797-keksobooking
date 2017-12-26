@@ -14,13 +14,6 @@
     0: 'не для гостей'
   };
 
-  var TYPE_TO_MINIMAL_COST = {
-    'bungalo': 0,
-    'flat': 1000,
-    'house': 5000,
-    'palace': 10000
-  };
-
   var ENTER_KEYCODE = 13;
 
   var checkRoomCapacity = function () {
@@ -43,26 +36,17 @@
     roomSelector.addEventListener('change', checkRoomCapacity);
   };
 
-  var checkCost = function () {
-    var typeSelector = document.querySelector('#type');
-    var costSelector = document.querySelector('#price');
-    typeSelector.addEventListener('change', function () {
-      var minCost = TYPE_TO_MINIMAL_COST[typeSelector.value];
-      costSelector.setAttribute('min', minCost);
-      costSelector.value = minCost;
-    });
+
+  var syncValues = function (element, value) {
+    element.value = value;
+  };
+  var syncValueWithMin = function (element, value) {
+    element.min = value;
+    element.value = value;
   };
 
-  var checkTime = function () {
-    var timeInSelector = document.querySelector('#timein');
-    var timeOutSelector = document.querySelector('#timeout');
-    timeInSelector.addEventListener('change', function () {
-      timeOutSelector.value = timeInSelector.value;
-    });
-    timeOutSelector.addEventListener('change', function () {
-      timeInSelector.value = timeOutSelector.value;
-    });
-  };
+  window.synchronizeFields(document.querySelector('#timein'), document.querySelector('#timeout'), ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
+  window.synchronizeFields(document.querySelector('#type'), document.querySelector('#price'), ['bungalo', 'flat', 'house', 'palace'], [0, 1000, 5000, 10000], syncValueWithMin);
 
   var form = document.querySelector('.notice__form');
   var inputs = form.querySelectorAll('input');
@@ -114,6 +98,4 @@
   };
 
   checkRoomCapacity();
-  checkCost();
-  checkTime();
 })();
