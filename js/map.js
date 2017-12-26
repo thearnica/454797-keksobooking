@@ -57,10 +57,17 @@
     }, true);
   }
 
+  var updateFilters = window.debounce(500, function () {
+    window.showMapPins(mapPins, window.filterFactory());
+  });
+  window.getAllFilters().forEach(function (filter) {
+    filter.addEventListener('change', updateFilters);
+  });
+
   function initMainMapPin() {
     cartOfAdverts.classList.remove('map--faded');
     window.removeActiveMapPin(mapPins);
-    window.visibleMapPins(mapPins);
+    window.showMapPins(mapPins, window.filterFactory());
     form.classList.remove('notice__form--disabled');
     window.includedInputs();
     mainMapPinDragger();
@@ -85,6 +92,7 @@
   cartOfAdverts.classList.remove('map--faded');
 
   loading();
+
 
   window.backend.load(function (adverts) {
     window.adverts = adverts;
