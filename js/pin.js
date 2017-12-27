@@ -15,6 +15,7 @@
       var mapPin = mapPinTemplate.cloneNode(true);
       var imagePin = mapPin.querySelector('img');
 
+      mapPin.advert = advert;
       mapPin.style.left = advert.location.x + 'px';
       mapPin.style.top = advert.location.y + 'px';
       imagePin.src = advert.author.avatar;
@@ -41,10 +42,16 @@
     });
   };
 
-  window.visibleMapPins = function (mapPins) {
-    mapPins.forEach(function (mapPin) {
-      mapPin.style.display = '';
-    });
+  window.showMapPins = function (mapPins, check) {
+    window.hideMapPins(mapPins);
+    mapPins
+        .filter(function (mapPin) {
+          return check(mapPin.advert);
+        })
+        .splice(0, 5)
+        .forEach(function (mapPin) {
+          mapPin.style.display = '';
+        });
   };
 
   window.removeActiveMapPin = function () {
