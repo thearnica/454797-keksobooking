@@ -48,6 +48,8 @@
     var offerSchedule = offer.querySelector('p:nth-of-type(4)');
     var offerDescription = offer.querySelector('p:nth-of-type(5)');
     var offerAvatar = offer.querySelector('img');
+    var photoTemplate = offer.querySelector('.popup__pictures li');
+    var pictures = offer.querySelector('.popup__pictures');
 
     offerTitle.textContent = advert.offer.title;
     offerAddress.textContent = advert.offer.address;
@@ -66,6 +68,16 @@
 
     offerDescription.textContent = advert.offer.description;
     offerAvatar.src = advert.author.avatar;
+    var fragmentPhotos = document.createDocumentFragment();
+
+    advert.offer.photos.forEach(function (photo) {
+      var photoElement = photoTemplate.cloneNode(true);
+      var photoItem = photoElement.querySelector('img');
+      photoItem.src = photo;
+      fragmentPhotos.appendChild(photoElement);
+    });
+    pictures.innerHTML = '';
+    pictures.appendChild(fragmentPhotos);
 
     return offer;
   };
