@@ -1,7 +1,5 @@
 'use strict';
 (function () {
-  var ENTER_KEYCODE = 13;
-
   var cartOfAdverts = document.querySelector('.map');
   var template = document.querySelector('template');
   var mapPinTemplate = template.content.querySelector('.map__pin');
@@ -9,7 +7,7 @@
 
   cartOfAdverts.classList.remove('map--faded');
 
-  window.renderMapPins = function () {
+  var renderMapPins = function () {
     var adverts = window.adverts;
     var renderMapPin = function (advert) {
       var mapPin = mapPinTemplate.cloneNode(true);
@@ -36,14 +34,14 @@
     return mapPins;
   };
 
-  window.hideMapPins = function (mapPins) {
+  var hideMapPins = function (mapPins) {
     mapPins.forEach(function (mapPin) {
       mapPin.style.display = 'none';
       mapPin.onHide();
     });
   };
 
-  window.showMapPins = function (mapPins, check) {
+  var showMapPins = function (mapPins, check) {
     // visible
     mapPins
         .filter(function (mapPin) {
@@ -66,10 +64,17 @@
 
   };
 
-  window.removeActiveMapPin = function () {
+  var removeActiveMapPin = function () {
     var activePin = document.querySelector('.map__pin--active');
     if (activePin) {
       activePin.classList.remove('map__pin--active');
+    }
+  };
+
+  var setActiveMapPin = function (pin) {
+    removeActiveMapPin();
+    if (pin) {
+      pin.classList.add('map__pin--active');
     }
   };
 
@@ -83,15 +88,21 @@
     });
 
     mapPin.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === ENTER_KEYCODE) {
+      if (evt.keyCode === window.ENTER_KEYCODE) {
         onShow(index);
       }
     });
   };
 
-  window.setupMapPins = function (mapPins, onShow, onHide) {
+  var setupMapPins = function (mapPins, onShow, onHide) {
     mapPins.forEach(function (mapPin, index) {
       setupMapPin(mapPin, index, onShow, onHide);
     });
   };
+
+  window.renderMapPins = renderMapPins;
+  window.hideMapPins = hideMapPins;
+  window.showMapPins = showMapPins;
+  window.setActiveMapPin = setActiveMapPin;
+  window.setupMapPins = setupMapPins;
 })();

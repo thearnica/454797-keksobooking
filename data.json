@@ -1,0 +1,200 @@
+[
+  {
+    "author": {
+      "avatar": "img/avatars/user01.png"
+    },
+    "offer": {
+      "title": "Маленький ужасный дворец",
+      "address": "507.16, 275.18",
+      "price": 551201,
+      "type": "house",
+      "rooms": 3,
+      "guests": 10,
+      "checkin": "14:00",
+      "checkout": "14:00",
+      "features": [
+        "parking",
+        "parking",
+        "wifi",
+        "wifi"
+      ],
+      "description": "",
+      "photos": []
+    },
+    "location": {
+      "x": 507.15752567324034,
+      "y": 275.1835608659484
+    }
+  },
+  {
+    "author": {
+      "avatar": "img/avatars/user02.png"
+    },
+    "offer": {
+      "title": "Огромный прекрасный дворец",
+      "address": "580.16, 441.81",
+      "price": 539837,
+      "type": "bungalo",
+      "rooms": 1,
+      "guests": 15,
+      "checkin": "12:00",
+      "checkout": "12:00",
+      "features": [
+        "parking",
+        "dishwasher",
+        "wifi"
+      ],
+      "description": "",
+      "photos": []
+    },
+    "location": {
+      "x": 580.1646555601336,
+      "y": 441.81458185842797
+    }
+  },
+  {
+    "author": {
+      "avatar": "img/avatars/user03.png"
+    },
+    "offer": {
+      "title": "Маленький ужасный дворец",
+      "address": "805.11, 219.57",
+      "price": 86798,
+      "type": "house",
+      "rooms": 4,
+      "guests": 11,
+      "checkin": "12:00",
+      "checkout": "14:00",
+      "features": [
+        "dishwasher",
+        "wifi",
+        "dishwasher",
+        "wifi"
+      ],
+      "description": "",
+      "photos": []
+    },
+    "location": {
+      "x": 805.1145864767745,
+      "y": 219.56752828102026
+    }
+  },
+  {
+    "author": {
+      "avatar": "img/avatars/user04.png"
+    },
+    "offer": {
+      "title": "Красивый гостевой домик",
+      "address": "305.35, 307.49",
+      "price": 959490,
+      "type": "bungalo",
+      "rooms": 1,
+      "guests": 16,
+      "checkin": "12:00",
+      "checkout": "14:00",
+      "features": [
+        "dishwasher",
+        "elevator"
+      ],
+      "description": "",
+      "photos": []
+    },
+    "location": {
+      "x": 305.3452527221521,
+      "y": 307.4920161903286
+    }
+  },
+  {
+    "author": {
+      "avatar": "img/avatars/user05.png"
+    },
+    "offer": {
+      "title": "Большая уютная квартира",
+      "address": "712.10, 294.24",
+      "price": 30125,
+      "type": "flat",
+      "rooms": 1,
+      "guests": 16,
+      "checkin": "12:00",
+      "checkout": "12:00",
+      "features": [],
+      "description": "",
+      "photos": []
+    },
+    "location": {
+      "x": 712.0992048004964,
+      "y": 294.24022561130965
+    }
+  },
+  {
+    "author": {
+      "avatar": "img/avatars/user06.png"
+    },
+    "offer": {
+      "title": "Уютное бунгало далеко от моря",
+      "address": "530.57, 174.23",
+      "price": 759558,
+      "type": "flat",
+      "rooms": 1,
+      "guests": 10,
+      "checkin": "12:00",
+      "checkout": "13:00",
+      "features": [
+        "conditioner",
+        "dishwasher"
+      ],
+      "description": "",
+      "photos": []
+    },
+    "location": {
+      "x": 530.5717271399569,
+      "y": 174.23337284498393
+    }
+  },
+  {
+    "author": {
+      "avatar": "img/avatars/user07.png"
+    },
+    "offer": {
+      "title": "Некрасивый негостеприимный домик",
+      "address": "593.20, 297.81",
+      "price": 661810,
+      "type": "bungalo",
+      "rooms": 4,
+      "guests": 5,
+      "checkin": "13:00",
+      "checkout": "13:00",
+      "features": [],
+      "description": "",
+      "photos": []
+    },
+    "location": {
+      "x": 593.2034055519796,
+      "y": 297.81237849184583
+    }
+  },
+  {
+    "author": {
+      "avatar": "img/avatars/user08.png"
+    },
+    "offer": {
+      "title": "Маленький ужасный дворец",
+      "address": "899.63, 134.23",
+      "price": 886548,
+      "type": "flat",
+      "rooms": 1,
+      "guests": 3,
+      "checkin": "12:00",
+      "checkout": "13:00",
+      "features": [
+        "elevator"
+      ],
+      "description": "",
+      "photos": []
+    },
+    "location": {
+      "x": 899.6288059110947,
+      "y": 134.2348354678114
+    }
+  }
+]

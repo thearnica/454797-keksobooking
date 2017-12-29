@@ -2,7 +2,12 @@
 
 (function () {
   var SERVER_URL = 'https://js.dump.academy/keksobooking';
+  var DATA_FILE = SERVER_URL + '/data';
   var HTTP_CODE_OK = 200;
+
+  // debug
+
+  DATA_FILE = 'data.json';
 
   var response = function (xhr, onLoad, onError) {
     return function () {
@@ -26,7 +31,7 @@
 
   var load = function (onLoad, onError) {
     var xhr = setup(onLoad, onError);
-    xhr.open('GET', SERVER_URL + '/data');
+    xhr.open('GET', DATA_FILE);
     xhr.send();
   };
 

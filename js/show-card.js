@@ -1,8 +1,5 @@
 'use strict';
 (function () {
-  var ESC_KEYCODE = 27;
-  var ENTER_KEYCODE = 13;
-
   var template = document.querySelector('template');
   var offerTemplate = template.content.querySelector('.map__card');
   var cartOfAdverts = document.querySelector('.map');
@@ -16,7 +13,7 @@
   };
 
   var closePopup = function () {
-    window.removeActiveMapPin();
+    window.setActiveMapPin(null);
     if (activePopup) {
       removeNode(activePopup);
       activePopup = null;
@@ -25,7 +22,7 @@
   };
 
   var closePopupOnEscPress = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.keyCode === window.ESC_KEYCODE) {
       closePopup();
     }
   };
@@ -42,7 +39,7 @@
 
   var closePopupOnEnterPress = function () {
     findButtonClosePopup(activePopup).addEventListener('keydown', function (evt) {
-      if (evt.keyCode === ENTER_KEYCODE) {
+      if (evt.keyCode === window.ENTER_KEYCODE) {
         closePopup();
       }
     });
@@ -52,21 +49,25 @@
     activePopup = offerTemplate.cloneNode(true);
     window.renderOffer(activePopup, window.adverts[index]);
     activePopup.advertIndex = index;
+    window.setActiveMapPin(window.mapPins[index]);
 
     closePopupOnClick();
     closePopupOnEnterPress();
     cartOfAdverts.appendChild(activePopup);
   };
 
-  window.showCard = function (index) {
+  var showCard = function (index) {
     closePopup();
     openPopup(index);
     document.addEventListener('keydown', closePopupOnEscPress);
   };
 
-  window.hideCard = function (index) {
+  var hideCard = function (index) {
     if (activePopup && activePopup.advertIndex === index) {
       closePopup();
     }
   };
+
+  window.showCard = showCard;
+  window.hideCard = hideCard;
 })();

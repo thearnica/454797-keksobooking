@@ -1,9 +1,11 @@
 'use strict';
 (function () {
-  window.synchronizeFields = function (from, to, valuesA, valuesB, callback) {
-    var valueIndex = valuesA.indexOf(from.value);
+  var synchronizeFields = function (source, destination, valuesFrom, valuesTo, callback) {
+    var valueIndex = valuesFrom.indexOf(source.value);
     if (valueIndex >= 0) {
-      callback(to, valuesB[valueIndex]);
+      callback(destination, valuesTo[valueIndex]);
     }
   };
+
+  window.synchronizeFields = synchronizeFields;
 })();

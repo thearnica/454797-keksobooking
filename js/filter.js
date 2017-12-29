@@ -48,13 +48,13 @@
     }, true);
   };
 
-  var all = function (set) {
+  var withAllTrue = function (set) {
     return set.reduce(function (result, flag) {
       return result && flag;
     }, true);
   };
 
-  window.filterFactory = function getFilter() {
+  var filterFactory = function getFilter() {
     var features = extractFeatures();
     var type = typeFilter.value;
     var price = priceFilter.value;
@@ -62,7 +62,7 @@
     var guests = guestsFilter.value;
 
     return function (advert) {
-      return all([
+      return withAllTrue([
         compareValues(type, advert.offer.type),
         compareValues(rooms, advert.offer.rooms),
         compareValues(guests, advert.offer.guests),
@@ -72,7 +72,10 @@
     };
   };
 
-  window.getAllFilters = function () {
+  var getAllFilters = function () {
     return allFilters;
   };
+
+  window.filterFactory = filterFactory;
+  window.getAllFilters = getAllFilters;
 })();
