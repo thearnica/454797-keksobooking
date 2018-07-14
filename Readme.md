@@ -1,5 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/thearnica/454797-keksobooking.svg)](https://greenkeeper.io/)
+
 * Студент: [Марина Корзунова](https://up.htmlacademy.ru/javascript/11/user/454797).
 * Наставник: [Игорь Антонов](https://htmlacademy.ru/profile/antonov).
 
